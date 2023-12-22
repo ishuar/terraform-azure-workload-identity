@@ -7,7 +7,7 @@ locals {
     used_case   = "tf-az-wi-module-dev"
   }
 
-  identities = [
+  example-service-account-01 = [
     ########### Identity with Azure built-in role ###########
     {
       service_account_name = "example-service-account-01"
@@ -19,11 +19,12 @@ locals {
         },
       ]
     },
+  ]
+  example-service-account-02 = [
     ########### Identity with Azure built-in and custom role ###########
     {
-      service_account_name = "example-service-account-02"
-      namespace            = "example-02"
-      create_custom_role   = true
+      service_account_name = var.service_account_name # for testing purposes
+      namespace            = var.namespace            # for testing purposes
       role_assignments = [
         {
           role_definition_name = "Reader"
@@ -40,4 +41,8 @@ locals {
       ]
     }
   ]
+  identities = concat(
+    local.example-service-account-01,
+    local.example-service-account-02
+  )
 }

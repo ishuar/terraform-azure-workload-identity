@@ -26,7 +26,11 @@ No requirements.
 
 ## Inputs
 
-No inputs.
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| <a name="input_identities"></a> [identities](#input\_identities) | (optional) Identities to create. See README for more information.It includes all the inputs from the role\_assignments block in the module. | <pre>set(object({<br>    service_account_name = string<br>    namespace            = string<br>    role_assignments = set(object({<br>      role_definition_name          = optional(string)<br>      name                          = optional(string, null)<br>      create_custom_role            = optional(bool, false)<br>      condition                     = optional(string, null)<br>      condition_version             = optional(string, null)<br>      scope                         = optional(string)<br>      custom_role_description       = optional(string)<br>      custom_role_definition_id     = optional(string, null)<br>      custom_role_actions           = optional(set(string), [])<br>      custom_role_data_actions      = optional(set(string), [])<br>      custom_role_not_actions       = optional(set(string), [])<br>      custom_role_not_data_actions  = optional(set(string), [])<br>      custom_role_assignable_scopes = optional(set(string), null)<br>    }))<br>  }))</pre> | `[]` | no |
+| <a name="input_namespace"></a> [namespace](#input\_namespace) | (optional) namesapce for example-service-account-02, need variable to over-ride in tests. | `string` | `"default"` | no |
+| <a name="input_service_account_name"></a> [service\_account\_name](#input\_service\_account\_name) | (optional) Service Account name for second example, need variable to over-ride in tests. | `string` | `"example-service-account-02"` | no |
 
 ## Outputs
 

@@ -6,8 +6,10 @@ resource "azurerm_resource_group" "this" {
 ### Multiple Identities using for_each on the module level ###
 
 module "multiple_identities" {
+  ## check variables.tf for variable definition
+  for_each = { for identity in local.identities : identity.service_account_name => identity }
+
   source               = "../../"
-  for_each             = { for identity in local.identities : identity.service_account_name => identity } ## can use any supported data type
   resource_group_name  = azurerm_resource_group.this.name
   location             = azurerm_resource_group.this.location
   oidc_issuer_url      = "https://token.actions.githubusercontent.com"
