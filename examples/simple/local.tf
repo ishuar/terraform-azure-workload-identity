@@ -1,11 +1,5 @@
-/**
-* # Introduction
-*
-* This example show the simplest example of using the module to create a single user-managed identity and assign one custom and built-in role to it respectively.
-*/
-
 locals {
-  prefix = "wi-module"
+  prefix = "wi-sim-module"
 
   tags = {
     github_repo = "ishuar/terraform-azure-workload-identity"

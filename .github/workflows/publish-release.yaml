@@ -23,6 +23,7 @@ jobs:
           fetch-depth: 0 ## to get all tags
 
       - name: Create GitHub release
+        working-directory: ./.github
         run: |
           release_tag="v$(yq '.module_version' "./release-version.yaml")"
           release_notes="$(yq '.release_notes' "./release-version.yaml")"

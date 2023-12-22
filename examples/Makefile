@@ -35,4 +35,4 @@ clean-all: clean
 
 .Phony: docs
 docs:
-	terraform-docs --header-from local.tf markdown --sort-by required . > README.md
+	terraform-docs --header-from versions.tf markdown --sort-by required . > README.md

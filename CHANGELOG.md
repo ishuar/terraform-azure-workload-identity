@@ -23,6 +23,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 -->
 
+## v0.2.0
+
+### Added
+- Added example for creating multiple identities using individual combination of azure built-in and custom roles.
+
+### Others
+- Added automated tests for the example `multiple-identities`.
+  - To verify the core functionality of the module , create identities, assign multiple role and generate federated credentials.
+
 ## v0.1.0
 
 ### Added
