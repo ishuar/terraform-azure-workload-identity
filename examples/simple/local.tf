@@ -1,5 +1,5 @@
 locals {
-  prefix = "wi1-sim-module"
+  prefix = "wi-sim-module"
 
   tags = {
     github_repo = "ishuar/terraform-azure-workload-identity"
