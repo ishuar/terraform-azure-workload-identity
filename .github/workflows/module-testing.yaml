@@ -47,10 +47,11 @@ jobs:
           done
 
       ## Integrating testing using terraform native testing
-      - name: Testing complete example
-        working-directory: "${{ github.workspace }}/tests"
+      - name: Testing example
+        working-directory: "./tests"
         id: testing
         run: |
+          pwd
           terraform init
           terraform test -no-color -var-file=multiple-identities.auto.tfvars
 
