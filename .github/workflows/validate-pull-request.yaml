@@ -1,0 +1,62 @@
+name: Validate Pull Request
+on:
+  pull_request:
+    types:
+      - opened
+      - edited
+      - synchronize
+      - labeled
+      - unlabeled
+      - reopened
+      - ready_for_review
+
+permissions:
+   pull-requests: write
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Check terraform formatt
+        uses: dflook/terraform-fmt-check@v1
+        with:
+          path: "${{ github.workspace }}"
+
+      - uses: mheap/github-action-required-labels@v5
+        name: Check Correct Labeling on Pull request
+        with:
+          mode: exactly
+          count: 1
+          labels: "breaking-change,enhancement,bug,chore,documentation,github-actions"
+          add_comment: true
+
+      - name: Render and check diff on Readme with Terraform Changes
+        if: always() && !cancelled()
+        id: docs
+        run: |
+          curl -sSfL https://github.com/terraform-docs/terraform-docs/releases/download/v0.16.0/terraform-docs-v0.16.0-linux-amd64.tar.gz | tar xzf - terraform-docs
+          chmod +x terraform-docs
+          ./terraform-docs --config "${{ github.workspace }}/.config/.terraform-docs.yml" .
+          git diff --exit-code
+
+      - name: Comment on the PR if Readme is not upated.
+        if: failure() && !cancelled()
+        uses: thollander/actions-comment-pull-request@v2
+        with:
+          reactions: eyes
+          comment_tag: documentation
+          mode: recreate
+          message: |
+            **${{ github.workflow }} failed, Run make docs from the root of the repository to continue**
+
+      - name: Delete Comment on the PR if Readme is upated.
+        if: ${{ always() && steps.docs.conclusion == 'success' && !cancelled() }}
+        uses: thollander/actions-comment-pull-request@v2
+        with:
+          reactions: eyes
+          comment_tag: documentation
+          mode: delete
+          message: |
+            **${{ github.workflow }} failed, Run make docs from the root of the repository to continue**

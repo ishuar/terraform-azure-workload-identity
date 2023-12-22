@@ -1,0 +1,40 @@
+name: Publish module release
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '**/*.tf'      ## trigger release if any terraform file changes.
+      - 'scripts/*.sh' ## trigger release if any involved script has been modified.
+      - '.github/workflows/publish-release.yaml'
+
+permissions:
+  contents: write
+
+jobs:
+  release-module:
+    runs-on: ubuntu-latest
+    # Skip running release workflow on forks
+    if: github.repository_owner == 'ishuar'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 ## to get all tags
+
+      - name: Create GitHub release
+        run: |
+          release_tag="v$(yq '.module_version' "./release-version.yaml")"
+          release_notes="$(yq '.release_notes' "./release-version.yaml")"
+
+          echo "Check if the release tag: $release_tag already exists ...."
+
+          ## using test case and substituion because git tag command always returns 0 exit code.
+          if ! [[ "$(git tag --list "$release_tag")" ]] ; then
+            echo "Git Tag: $release_tag does not exists, tag and create a new release"
+            gh release create "$release_tag" --title  "$release_tag" --generate-notes --latest --repo "${{ github.repository_owner }}/${{ github.event.repository.name }}" --notes "$release_notes"
+          else
+            echo "$release_tag already exists, Update the module_version in release-version.yaml"
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
