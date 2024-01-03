@@ -23,6 +23,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 -->
 
+## v0.3.0
+
+### Added
+- Added complete example for creating multiple identities and kubernetes resources in azure kubernetes service.
+
+### Fixed
+- Fix typos in the readme.
+
 ## v0.2.0
 
 ### Added
@@ -38,7 +46,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 - First version of Module.
   -  Available Features
-     - Multiple [Azure built-i00n roles](https://learn.microsoft.com/en-us/azure/role-based-access-control/built-in-roles) assignments.
+     - Multiple [Azure built-in roles](https://learn.microsoft.com/en-us/azure/role-based-access-control/built-in-roles) assignments.
      - Multiple [Azure custom roles](https://learn.microsoft.com/en-us/azure/role-based-access-control/custom-roles) assignment.
      - Combination of Azure built-in and custom roles on the same identity.
      - Optional Kubernetes Service Account and Namespace creation when using with Azure Kubernetes Service.
