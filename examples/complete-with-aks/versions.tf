@@ -28,7 +28,7 @@ provider "kubernetes" {
   host                   = data.azurerm_kubernetes_cluster.example.kube_config.0.host
   cluster_ca_certificate = base64decode(data.azurerm_kubernetes_cluster.example.kube_config.0.cluster_ca_certificate)
 
-  # using kubelogin to get an AAD token for the cluster.
+  # Using kubelogin to get an AAD token for the cluster. works with AAD enabled AKS clusters
   exec {
     api_version = "client.authentication.k8s.io/v1beta1"
     command     = "kubelogin" ## need kubelogin installed on the machine where terraform is running
