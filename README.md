@@ -92,6 +92,8 @@ module "simple" {
 Examples are availabe in `examples` directory.
 
 - [simple](/examples/simple)
+- [multiple-identities](/examples/multiple-identities/)
+- [complete-with-aks](/examples/complete-with-aks/)
 
 **⭐️ Don't forget to give the project a star! Thanks again! ⭐️**
 
