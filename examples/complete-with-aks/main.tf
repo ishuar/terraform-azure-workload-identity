@@ -19,13 +19,13 @@ data "azurerm_dns_zone" "example" {
 module "complete_with_aks" {
   for_each = { for identity in local.identities : identity.service_account_name => identity }
 
-  source                      = "../../"
-  resource_group_name         = data.azurerm_resource_group.example.name
-  location                    = data.azurerm_resource_group.example.location
-  oidc_issuer_url             = data.azurerm_kubernetes_cluster.example.oidc_issuer_url
-  service_account_name        = each.value.service_account_name
-  namespace                   = each.value.namespace
-  role_assignments            = each.value.role_assignments
+  source               = "../../"
+  resource_group_name  = data.azurerm_resource_group.example.name
+  location             = data.azurerm_resource_group.example.location
+  oidc_issuer_url      = data.azurerm_kubernetes_cluster.example.oidc_issuer_url
+  service_account_name = each.value.service_account_name
+  namespace            = each.value.namespace
+  role_assignments     = each.value.role_assignments
 
   ## Create Kubernetes resources
   create_kubernetes_namespace = try(each.value.create_kubernetes_namespace, false)
