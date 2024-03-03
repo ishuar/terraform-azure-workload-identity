@@ -9,4 +9,8 @@ run "multiple_identities" {
     condition     = module.combination_service_accounts_and_github_workflow_identities["${var.service_account_name}"].subject == "system:serviceaccount:${var.namespace}:${var.service_account_name}"
     error_message = "Unexpected federated credential subject for service account ${var.service_account_name}"
   }
+  assert {
+    condition     = module.combination_service_accounts_and_github_workflow_identities["${var.service_account_name}"].client_id != ""
+    error_message = "No client id found for service account ${var.service_account_name}, No identity created"
+  }
 }
