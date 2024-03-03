@@ -16,12 +16,51 @@ resource "azurerm_federated_identity_credential" "this" {
   audience            = ["api://AzureADTokenExchange"]
   issuer              = var.oidc_issuer_url
   parent_id           = azurerm_user_assigned_identity.this.id
-  subject             = "system:serviceaccount:${var.namespace}:${var.service_account_name}"
+  subject             = local.subject
+
+  lifecycle {
+    precondition {
+      condition     = var.create_github_workflow_credentials || var.namespace != ""
+      error_message = "`namespace` must be set when `create_github_workflow_credentials` is set to `false`"
+    }
+    precondition {
+      condition     = var.create_github_workflow_credentials || var.service_account_name != ""
+      error_message = "`service_account_name` must be set when `create_github_workflow_credentials` is set to `false`"
+    }
+    precondition {
+      condition     = !var.create_github_workflow_credentials || var.github_entity_type != ""
+      error_message = "`github_entity_type` must be set when `create_github_workflow_credentials` is set to `true`"
+    }
+    precondition {
+      condition     = !var.create_github_workflow_credentials || var.github_owner != ""
+      error_message = "`github_owner` must be set when `create_github_workflow_credentials` is set to `true`"
+    }
+    precondition {
+      condition     = !var.create_github_workflow_credentials || var.github_repository_name != ""
+      error_message = "`github_repository_name` must be set when `create_github_workflow_credentials` is set to `true`"
+    }
+    precondition {
+      condition     = var.github_entity_type != "environment" || (var.github_entity_type == "environment" && var.environment_name != "")
+      error_message = "`environment_name` must be set when `github_entity_type` is set to `environment`"
+    }
+    precondition {
+      condition     = var.github_entity_type != "branch" || (var.github_entity_type == "branch" && var.branch_name != "")
+      error_message = "`branch_name` must be set when `github_entity_type` is set to `branch`"
+    }
+    precondition {
+      condition     = var.github_entity_type != "tag" || (var.github_entity_type == "tag" && var.tag_name != "")
+      error_message = "`tag_name` must be set when `github_entity_type` is set to `tag`"
+    }
+
+  }
 }
 
 locals {
-  create_azure_built_in_role_assigments = { for k in var.role_assignments : format("%s-%s", var.service_account_name, k.role_definition_name) => k if k.create_custom_role != true }
-  create_custom_role_assigments         = { for k in var.role_assignments : format("%s-%s", var.service_account_name, k.role_definition_name) => k if k.create_custom_role == true }
+  ## module.simple.azurerm_role_assignment.custom["key_for_resource_reference"]
+  ## module.simple.azurerm_role_assignment.azure["-key_for_resource_reference"]
+  key_for_resource_azurerm_role_assignment = var.create_github_workflow_credentials ? format("gh-repo-%s", var.github_repository_name) : var.service_account_name ## ref above ##
+  create_azure_built_in_role_assigments    = { for k in var.role_assignments : format("%s-%s", local.key_for_resource_azurerm_role_assignment, k.role_definition_name) => k if k.create_custom_role != true }
+  create_custom_role_assigments            = { for k in var.role_assignments : format("%s-%s", local.key_for_resource_azurerm_role_assignment, k.role_definition_name) => k if k.create_custom_role == true }
 }
 
 ## ref: https://registry.terraform.io/providers/hashicorp/azurerm/3.85.0/docs/resources/role_assignment
