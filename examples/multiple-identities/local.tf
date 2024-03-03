@@ -67,8 +67,7 @@ locals {
   )
 
   all_identities = concat(
-    local.example-service-account-01,
-    local.example-service-account-02,
+    local.service_account_identities,
     local.github-workflow-identities
   )
 }
