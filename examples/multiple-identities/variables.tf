@@ -3,8 +3,13 @@
 ## this is not being used in the example, but it is here for reference.
 variable "identities" {
   type = set(object({
-    service_account_name = string
-    namespace            = string
+    service_account_name               = string
+    namespace                          = string
+    oidc_issuer_url                    = string
+    create_github_workflow_credentials = bool
+    github_owner                       = string ## required if create_github_workflow_credentials is true
+    github_repository_name             = string ## required if create_github_workflow_credentials is true
+    github_entity_type                 = string ## required if create_github_workflow_credentials is true
     role_assignments = set(object({
       role_definition_name          = optional(string)
       name                          = optional(string, null)
@@ -52,6 +57,20 @@ variable "identities" {
     #         "Microsoft.Storage/storageAccounts/blobServices/containers/blobs/read",
     #       ]
     #     }
+    #   ]
+    # },
+    # {
+    #   create_github_workflow_credentials = true
+    #   github_owner                       = "ishuar"
+    #   github_repository_name             = "terraform-azure-workload-identity"
+    #   github_entity_type                 = "pull_request"
+    #   oidc_issuer_url                    = "https://token.actions.githubusercontent.com"
+    #   role_assignments = [
+    #     ############## Azure built-in role ###############
+    #     {
+    #       role_definition_name = "Contributor"
+    #       scope                = azurerm_resource_group.this.id
+    #     },
     #   ]
     # }
   ]
