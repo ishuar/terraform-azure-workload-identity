@@ -71,13 +71,13 @@ variable "use_existing_resource_group" {
 ############################################
 
 variable "service_account_name" {
-  description = "(Required) The name of the service account which is using the workload identity."
+  description = "(optional) The name of the service account which is using the workload identity. Required when `create_github_actions_credential` is set to `false`. "
   type        = string
   default     = ""
 }
 
 variable "namespace" {
-  description = "(Required) The namespace where service account will be created. New will be created if value is not equeal to kube-sytem and default"
+  description = "(optional) The namespace where service account will be created. New will be created if value is not equeal to kube-sytem and default.Required when `create_github_actions_credential` is set to `false`."
   type        = string
   default     = ""
 }
@@ -90,7 +90,7 @@ variable "create_kubernetes_namespace" {
 
 variable "namespace_labels" {
   type        = map(string)
-  description = "(optional)Labels for namespace created via terraform-kubernetes-provider resource."
+  description = "(optional) Labels for namespace created via terraform-kubernetes-provider resource."
   default     = {}
 }
 
