@@ -5,7 +5,7 @@
 *
 * Refer to each individual module interfaces `multiple_service_account_identities`,`multiple_github_workflow_identities` and `combination_service_accounts_and_github_workflow_identities` for more details.
 *
-* > :info: Individual usage of Module for GitHub Workflow and Kubernetes Service Account Identities is recommended to simplify comfiguration and reduce blast radius.
+* > :information_source: Individual usage of Module for GitHub Workflow and Kubernetes Service Account Identities is recommended to simplify configuration and reduce blast radius.
 */
 
 provider "azurerm" {

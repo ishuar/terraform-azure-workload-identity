@@ -4,7 +4,7 @@ This example show the example of using the module to create a multiple user-mana
 
 Refer to each individual module interfaces `multiple_service_account_identities`,`multiple_github_workflow_identities` and `combination_service_accounts_and_github_workflow_identities` for more details.
 
-> :info: Individual usage of Module for GitHub Workflow and Kubernetes Service Account Identities is recommended to simplify comfiguration and reduce blast radius.
+> :information\_source: Individual usage of Module for GitHub Workflow and Kubernetes Service Account Identities is recommended to simplify configuration and reduce blast radius.
 
 ## Requirements
 
@@ -40,5 +40,5 @@ No requirements.
 
 | Name | Description |
 |------|-------------|
-| <a name="output_combination_service_accounts_and_github_workflow_client_ids"></a> [combination\_service\_accounts\_and\_github\_workflow\_client\_ids](#output\_combination\_service\_accounts\_and\_github\_workflow\_client\_ids) | The Client IDs of the apps associated with the Identities. |
-| <a name="output_combination_service_accounts_and_github_workflow_subjects"></a> [combination\_service\_accounts\_and\_github\_workflow\_subjects](#output\_combination\_service\_accounts\_and\_github\_workflow\_subjects) | The subjects for the Federated Identity Credential associated with the Identities. |
+| <a name="output_client_ids"></a> [client\_ids](#output\_client\_ids) | The Client IDs of the apps associated with the Identities. |
+| <a name="output_subjects"></a> [subjects](#output\_subjects) | The subjects for the Federated Identity Credential associated with the Identities. |
