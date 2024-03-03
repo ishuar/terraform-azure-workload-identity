@@ -6,7 +6,7 @@ run "multiple_identities" {
     source = "../examples/multiple-identities"
   }
   assert {
-    condition     = module.multiple_identities["${var.service_account_name}"].subject == "system:serviceaccount:${var.namespace}:${var.service_account_name}"
+    condition     = module.combination_service_accounts_and_github_workflow_identities["${var.service_account_name}"].subject == "system:serviceaccount:${var.namespace}:${var.service_account_name}"
     error_message = "Unexpected federated credential subject for service account ${var.service_account_name}"
   }
 }
