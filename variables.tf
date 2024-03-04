@@ -155,19 +155,19 @@ variable "create_github_workflow_credentials" {
   default     = false
 }
 
-variable "environment_name" {
+variable "github_environment_name" {
   type        = string
   description = "(optional) GitHub environment name which uses the github workflow with federated credentials. Required when `github_entity_type` is set to `environment`."
   default     = ""
 }
 
-variable "tag_name" {
+variable "github_tag_name" {
   type        = string
   description = "(optional) GitHub tag name which uses the github workflow with federated credentials. Required when `github_entity_type` is set to `tag`."
   default     = ""
 }
 
-variable "branch_name" {
+variable "github_branch_name" {
   type        = string
   description = "(optional) GitHub branch name which uses the github workflow with federated credentials. Required when `github_entity_type` is set to `branch`."
   default     = ""

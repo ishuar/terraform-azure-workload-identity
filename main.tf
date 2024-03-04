@@ -40,16 +40,16 @@ resource "azurerm_federated_identity_credential" "this" {
       error_message = "`github_repository_name` must be set when `create_github_workflow_credentials` is set to `true`"
     }
     precondition {
-      condition     = var.github_entity_type != "environment" || (var.github_entity_type == "environment" && var.environment_name != "")
-      error_message = "`environment_name` must be set when `github_entity_type` is set to `environment`"
+      condition     = var.github_entity_type != "environment" || (var.github_entity_type == "environment" && var.github_environment_name != "")
+      error_message = "`github_environment_name` must be set when `github_entity_type` is set to `environment`"
     }
     precondition {
-      condition     = var.github_entity_type != "branch" || (var.github_entity_type == "branch" && var.branch_name != "")
-      error_message = "`branch_name` must be set when `github_entity_type` is set to `branch`"
+      condition     = var.github_entity_type != "branch" || (var.github_entity_type == "branch" && var.github_branch_name != "")
+      error_message = "`github_branch_name` must be set when `github_entity_type` is set to `branch`"
     }
     precondition {
-      condition     = var.github_entity_type != "tag" || (var.github_entity_type == "tag" && var.tag_name != "")
-      error_message = "`tag_name` must be set when `github_entity_type` is set to `tag`"
+      condition     = var.github_entity_type != "tag" || (var.github_entity_type == "tag" && var.github_tag_name != "")
+      error_message = "`github_tag_name` must be set when `github_entity_type` is set to `tag`"
     }
 
   }

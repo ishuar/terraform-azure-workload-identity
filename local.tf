@@ -3,9 +3,9 @@ locals {
   uid_name                      = var.user_assigned_identity_name != "" ? var.user_assigned_identity_name : local.uid_with_service_account_name
 
   ## Multiple filters using conditional expressions for github workflows/actions subject name.
-  tag_entity_type         = var.github_entity_type != "tag" ? "" : "ref:refs/tags/${var.tag_name}"
-  branch_entity_type      = var.github_entity_type != "branch" ? (local.tag_entity_type) : "ref:refs/heads/${var.branch_name}"
-  environment_entity_type = var.github_entity_type != "environment" ? (local.branch_entity_type) : "environment/${var.environment_name}"
+  tag_entity_type         = var.github_entity_type != "tag" ? "" : "ref:refs/tags/${var.github_tag_name}"
+  branch_entity_type      = var.github_entity_type != "branch" ? (local.tag_entity_type) : "ref:refs/heads/${var.github_branch_name}"
+  environment_entity_type = var.github_entity_type != "environment" ? (local.branch_entity_type) : "environment/${var.github_environment_name}"
   github_entity_config    = var.github_entity_type != "pull_request" ? (local.environment_entity_type) : "pull_request"
 
   ## final subject name contstructed using the entity_config.
