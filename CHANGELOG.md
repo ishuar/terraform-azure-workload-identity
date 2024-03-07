@@ -23,6 +23,23 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 -->
 
+## v0.4.0
+
+### Added
+- Feature to support for `GitHub Workflows` as the federated credential's subject in previous versions was only compatible with kubernetes service accounts.
+  - Reference Docs:
+    - [MS: Use GitHub Actions to connect to Azure](https://learn.microsoft.com/en-us/azure/developer/github/connect-from-azure?tabs=azure-portal%2Clinux)
+    - [GitHub: Configuring OpenID Connect in Azure ](https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/configuring-openid-connect-in-azure)
+  - Precondtions checks
+    - To support multiple github_entity_type.
+    - `namespace` and `service_account_name` are still required if `create_github_workflow_credentials` is set to false.
+  - Disable `github_workflow_credentials` by default
+
+### Others
+
+- Adjusted terraform resource `azurerm_role_assignment` key with respect to `github_workflow` feature. Using `gh-repo-REPO_NAME`.
+- `simple` example is referring to only `github_workflow_credentials` usage, Use `multiple-identities` example for both features (kubernetes service account and github workflows).
+
 ## v0.3.0
 
 ### Added
@@ -54,4 +71,3 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
   - Considerations
     - Please read the variable descriptions in the [variables.tf](./variables.tf) to be aware about the usage of the inputs.
-

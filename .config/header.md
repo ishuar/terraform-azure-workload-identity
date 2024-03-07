@@ -34,7 +34,7 @@ managed within the footer file
 | Azure Account | `N/A`        | [Create Azure account](https://azure.microsoft.com/en-us/free)                                       | Yes      |
 <!-- | azure-cli     | `>=2.50.0`   | [Install azure CLI](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli)                   | Yes      | -->
 
-**⭐️ Don't forget to give the project a star! Thanks again! ⭐️**
+**⭐️ Please consider following me on GitHub 👉 and giving a star ⭐ to the repository for future updates. ⭐️**
 
 ## Introduction
 
@@ -47,6 +47,7 @@ managed within the footer file
 - Combination of Azure built-in and custom roles on the same identity.
 - Optional Kubernetes Service Account and Namespace creation when using with Azure Kubernetes Service.
 - Examples to use the module.
+- Support for GitHub Workflows federated user assigned identities.
 
 ## Usage
 
@@ -62,17 +63,20 @@ resource "azurerm_resource_group" "this" {
 
 module "simple" {
   source  = "ishuar/workload-identity/azure"
-  version = "~> 0.1"
+  version = "0.4.0"
 
-  resource_group_name  = azurerm_resource_group.this.name
-  location             = azurerm_resource_group.this.location
-  oidc_issuer_url      = "https://token.actions.githubusercontent.com"
-  service_account_name = "${local.prefix}-service-account"
-  namespace            = "default"
+  resource_group_name                = azurerm_resource_group.this.name
+  location                           = azurerm_resource_group.this.location
+  oidc_issuer_url                    = "https://token.actions.githubusercontent.com"
+  create_github_workflow_credentials = true
+  github_owner                       = "ishuar"
+  github_repository_name             = "terraform-azure-workload-identity"
+  github_entity_type                 = "pull_request" ## DEFAULT VALUE
+
   role_assignments = [
     ############## Azure built-in role ###############
     {
-      role_definition_name = "Reader"
+      role_definition_name = "Contributor"
       scope                = azurerm_resource_group.this.id
     },
     ############## Azure custom role ###############
@@ -86,6 +90,7 @@ module "simple" {
     }
   ]
 }
+
 ```
 
 ## Examples
@@ -96,4 +101,4 @@ Examples are availabe in `examples` directory.
 - [multiple-identities](/examples/multiple-identities/)
 - [complete-with-aks](/examples/complete-with-aks/)
 
-**⭐️ Don't forget to give the project a star! Thanks again! ⭐️**
+**⭐️ Please consider following me on GitHub 👉 and giving a star ⭐ to the repository for future updates. ⭐️**

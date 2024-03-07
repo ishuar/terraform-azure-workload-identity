@@ -71,13 +71,15 @@ variable "use_existing_resource_group" {
 ############################################
 
 variable "service_account_name" {
-  description = "(Required) The name of the service account which is using the workload identity."
+  description = "(optional) The name of the service account which is using the workload identity. Required when `create_github_actions_credential` is set to `false`. "
   type        = string
+  default     = ""
 }
 
 variable "namespace" {
-  description = "(Required) The namespace where service account will be created. New will be created if value is not equeal to kube-sytem and default"
+  description = "(optional) The namespace where service account will be created. New will be created if value is not equeal to kube-sytem and default.Required when `create_github_actions_credential` is set to `false`."
   type        = string
+  default     = ""
 }
 
 variable "create_kubernetes_namespace" {
@@ -88,7 +90,7 @@ variable "create_kubernetes_namespace" {
 
 variable "namespace_labels" {
   type        = map(string)
-  description = "(optional)Labels for namespace created via terraform-kubernetes-provider resource."
+  description = "(optional) Labels for namespace created via terraform-kubernetes-provider resource."
   default     = {}
 }
 
@@ -119,4 +121,54 @@ variable "service_account_token_expiration_seconds" {
   type        = number
   description = "(optional) Represents the expirationSeconds field for the projected service account token"
   default     = 86400
+}
+
+
+############################################
+######## GitHub Workflows/actions ##########
+############################################
+variable "github_entity_type" {
+  type        = string
+  description = "(optional) The filter used to scope the OIDC requests from GitHub workflows. This field is used to generate the subject claim. Accepted values are 'environment', 'branch', 'tag' or 'pull_request'. Required when `create_github_actions_credential` is set to `true`."
+  default     = "pull_request"
+  validation {
+    condition     = var.github_entity_type == "environment" || var.github_entity_type == "branch" || var.github_entity_type == "tag" || var.github_entity_type == "pull_request"
+    error_message = "Invalid entity_type. Accepted values are 'environment', 'branch', 'tag' or 'pull_request'."
+  }
+}
+
+variable "github_owner" {
+  type        = string
+  description = "(optional) GitHub organization name or GitHub username that owns the repository where github workflow will use federated credentials. Required when `create_github_actions_credential` is set to `true`."
+  default     = ""
+}
+
+variable "github_repository_name" {
+  type        = string
+  description = "(optional)GitHub Repository name where github workflow will use federated credentials. Required when `create_github_actions_credential` is set to `true`."
+  default     = ""
+}
+
+variable "create_github_workflow_credentials" {
+  type        = bool
+  description = "(optional) Whether to create federated credentials for GitHub workflow or not?. Default is to to create credentials for Azure kubernetes service accounts. If set to `true`, then `github_owner`, 'github_entity_type' and `github_repository_name` must be set."
+  default     = false
+}
+
+variable "github_environment_name" {
+  type        = string
+  description = "(optional) GitHub environment name which uses the github workflow with federated credentials. Required when `github_entity_type` is set to `environment`."
+  default     = ""
+}
+
+variable "github_tag_name" {
+  type        = string
+  description = "(optional) GitHub tag name which uses the github workflow with federated credentials. Required when `github_entity_type` is set to `tag`."
+  default     = ""
+}
+
+variable "github_branch_name" {
+  type        = string
+  description = "(optional) GitHub branch name which uses the github workflow with federated credentials. Required when `github_entity_type` is set to `branch`."
+  default     = ""
 }
