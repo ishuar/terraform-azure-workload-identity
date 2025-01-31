@@ -23,6 +23,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 -->
 
+## v0.4.1
+
+### Others
+- Upgrade `terraform` and `azurerm` version, so the provider functions normalise_resource_id and parse_resource_id are available to use.
+
 ## v0.4.0
 
 ### Added
