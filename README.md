@@ -106,15 +106,15 @@ Examples are availabe in `examples` directory.
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.3 |
-| <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | ~> 3.55 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.8 |
+| <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | ~> 4.15 |
 | <a name="requirement_kubernetes"></a> [kubernetes](#requirement\_kubernetes) | ~>2.24 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | ~> 3.55 |
+| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | ~> 4.15 |
 | <a name="provider_kubernetes"></a> [kubernetes](#provider\_kubernetes) | ~>2.24 |
 
 ## Modules
